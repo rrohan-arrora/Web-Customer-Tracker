@@ -66,6 +66,13 @@
 </beans>
 
 
+<!-- 
+This is the basic workflow of the DAO object.
+
+Customer DAO <=> Session Factory(refers to dataSource name) <=> Data Source(database connection) <=> Database
+ -->
+
+
 
 
 
