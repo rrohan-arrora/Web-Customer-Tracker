@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.luv2code.springdemo.entity.Customer;
 import com.luv2code.springdemo.service.CustomerService;
@@ -36,13 +37,13 @@ public class CustomerController {
 	@GetMapping("/showFormForAdd")
 	public String showFormForAdd(Model theModel) {
 		
-		theModel.addAttribute("addCustomer", new Customer());
+		theModel.addAttribute("addUpdateCustomer", new Customer());
 		return "customer-form";
 	}
 	
 	@PostMapping("/saveCustomer")
-	public String processForm(@ModelAttribute("addCustomer") Customer theCustomer,
-			BindingResult theBindingResult) {
+	public String processForm(@ModelAttribute("addUpdateCustomer") Customer theCustomer,
+			BindingResult theBindingResult, Model theModel) {
 				
 		if(theBindingResult.hasErrors()) {
 			return "customer-form";
@@ -50,9 +51,24 @@ public class CustomerController {
 		
 		// save the customer
 		customerService.addCustomer(theCustomer);
+//		theModel.addAttribute("customer", theCustomer);
 		
+		return "redirect:/customer/list";
 		
-		return "customer-confirmation";
+//		return "customer-confirmation";
+	}
+	
+	@GetMapping("/showFormForUpdate")
+	public String showFormForUpdate(@RequestParam("customerId") int theId, Model theModel) {
+		
+		// get the customer from the database
+		Customer theCustomer = customerService.getCustomer(theId);
+		
+		// set the customer as a model attribute to prepoluate the form
+		theModel.addAttribute("addUpdateCustomer", theCustomer);
+		// send over to our form
+		
+		return "customer-form";
 	}
 	
 	
