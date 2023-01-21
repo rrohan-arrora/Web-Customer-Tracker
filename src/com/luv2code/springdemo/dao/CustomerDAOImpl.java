@@ -2,8 +2,6 @@ package com.luv2code.springdemo.dao;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -26,7 +24,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		Session session = sessionFactory.getCurrentSession();
 		
 		// create a query
-		Query<Customer> theQuery = session.createQuery("from Customer", Customer.class);
+		Query<Customer> theQuery = session.createQuery("from Customer order by lastName", Customer.class);
 		
 		// get the list of customers: execute query
 		List<Customer> theCustomers = theQuery.getResultList();
@@ -35,4 +33,15 @@ public class CustomerDAOImpl implements CustomerDAO {
 		return theCustomers;
 	}
 
+	@Override
+	public void addCustomer(Customer theCustomer) {
+		
+		// get the current hibernate session
+		Session session = sessionFactory.getCurrentSession();
+		
+		// save the customer
+		session.save(theCustomer);
+		
+		
+	}
 }
