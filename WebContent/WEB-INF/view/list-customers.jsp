@@ -40,6 +40,9 @@
 					<c:url var="updateLink" value="/customer/showFormForUpdate">
 						<c:param name="customerId" value="${c.id }" />
 					</c:url>
+					<c:url var="deleteLink" value="/customer/deleteCustomer">
+						<c:param name="customerId" value="${c.id }" />
+					</c:url>
 					<tr>
 						<td>
 							${c.firstName}
@@ -52,6 +55,9 @@
 						</td>
 						<td> 
 							<a href="${updateLink}"> Update </a>
+						</td>
+						<td> 
+							<a href="${deleteLink}"> Delete </a>
 						</td>
 					</tr>
 				</c:forEach>

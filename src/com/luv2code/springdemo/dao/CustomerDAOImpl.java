@@ -58,4 +58,12 @@ public class CustomerDAOImpl implements CustomerDAO {
 		
 		
 	}
+	
+	public void deleteCustomer(int theCustomer) {
+		Session session = sessionFactory.getCurrentSession();
+		
+		// save the customer
+		Customer customer = getCustomer(theCustomer);
+		session.delete(customer);
+	}
 }
